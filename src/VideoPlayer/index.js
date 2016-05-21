@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MediaPlayer } from 'dashjs';
+import { MediaPlayer, Debug } from 'dashjs';
 import Controls from './Controls';
 import './style.scss';
 
@@ -7,10 +7,11 @@ export default class VideoPlayer extends Component {
     constructor(props) {
         super(props);
         this.state = { needleLeft: 0, isMouseDown: false, player: MediaPlayer().create() };
+        this.state.player.getDebug().setLogToBrowserConsole(false);
     }
 
     componentDidMount() {
-        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true);
+        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true, false);
         //player.pause();
 
         this.refs.seek.addEventListener('mouseenter', this.onMouseEnterSeek);
@@ -81,7 +82,7 @@ export default class VideoPlayer extends Component {
         return (
             <div className="sky-video-container">
                 <video ref="video"></video>
-                <Controls />
+                <Controls player={this.state.player} />
             </div>
         );
     }

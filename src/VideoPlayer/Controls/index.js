@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PlayPause from './PlayPause';
 import './style.scss';
 
 export default class Controls extends Component {
@@ -9,9 +10,7 @@ export default class Controls extends Component {
     render() {
         return (
             <div className="controls">
-                <div className="play-pause">
-                    <i className="fa fa-play" aria-hidden="false"></i>
-                </div>
+                <PlayPause player={this.props.player} />
                 {/*<div className="seek" ref="seek">
                     <div className="needle-container">
                         <div style={style} className="needle" ref="needle">
