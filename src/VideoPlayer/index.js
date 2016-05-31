@@ -33,6 +33,7 @@ export default class VideoPlayer extends Component {
             if(!this.state.isSeekBarMouseDown && this.state.player.duration() > 0) {
                 this.setState(Object.assign({
                     seekPercentage: this.refs.video.currentTime / this.state.player.duration() * 100
+                    
                 }));
             }
         }, 1000);
