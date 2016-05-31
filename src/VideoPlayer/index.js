@@ -53,7 +53,7 @@ export default class VideoPlayer extends Component {
                     tweets
                 }));
             });
-        }, 5000);
+        }, 30000);
 
         let connection = $.hubConnection('http://bss-interstella-api.azurewebsites.net:80');
         let proxy = connection.createHubProxy('PlaybackHub');
