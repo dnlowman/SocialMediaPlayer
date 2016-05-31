@@ -33,7 +33,7 @@ export default class VideoPlayer extends Component {
             }
         }, 1000);
 
-        let connection = $.hubConnection('http://localhost:8081');
+        let connection = $.hubConnection('http://bss-interstella-api.azurewebsites.net:80');
         let proxy = connection.createHubProxy('PlaybackHub');
 
         proxy.on('play', () => {
