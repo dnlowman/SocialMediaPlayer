@@ -14,7 +14,7 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html'
-        })
+        }),
     ],
     module: {
         loaders: [
