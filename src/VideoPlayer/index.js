@@ -13,6 +13,7 @@ export default class VideoPlayer extends Component {
             volumePercentage: 100,
             isSeekBarMouseDown: false,
             isVolumeBarMouseDown: false,
+            tweets: []
         };
 
         this.state.player.getDebug().setLogToBrowserConsole(false);
@@ -23,7 +24,7 @@ export default class VideoPlayer extends Component {
     componentDidMount() {
         this.refs.video.oncontextmenu = () => { return false; };
         this.state.player.initialize(this.refs.video, 'http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd', true);
-              
+                      
         // if(localStorage.getItem('seek') > 0)
         // {
         //     console.log(localStorage.getItem('seek'));
@@ -42,6 +43,25 @@ export default class VideoPlayer extends Component {
                 }));
             }
         }, 1000);
+        
+        setInterval(() => {
+            $.get("http://bssinterstellar.azurewebsites.net/api/twitter?q=gameofthrones", ( data ) => {
+                let obj = JSON.parse(data);     
+                    
+                let tweets = obj.map((item) => {
+                                    return {
+                                        User: item.User.ScreenName,
+                                        Text: item.Text
+                                    }
+                                });
+                                    
+                this.setState(Object.assign({
+                    tweets
+                }));
+            });
+        }, 5000);
+        
+        
     }
 
     onPlayPause = () => {
@@ -140,7 +160,7 @@ export default class VideoPlayer extends Component {
                 
         localStorage.setItem("volume", percentage);
         
-        this.state.player.setVolume(volume / 100);
+        this.state.player.setVolume(percentage / 100);
     }
     
 
@@ -168,8 +188,9 @@ export default class VideoPlayer extends Component {
                     </div>
                     <div className="twitter-feed-container">
                         <i className="fa fa-twitter fa-lg" aria-hidden="true"></i>
-                        <br />OMG
-                        <br />WOAH!
+                        {
+                            this.state.tweets.map((tweet, idx) => <div key={idx}>{tweet.User} - {tweet.Text}</div> )
+                        }
                     </div>
                 </div>
                 <div className="controls-container">
