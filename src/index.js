@@ -6,6 +6,6 @@ import Chat from './Chat';
 let videoWithChat = <div><VideoPlayer /><Chat /></div>;
 
 ReactDOM.render(
-    <videoWithChat />,
+    videoWithChat,
     document.getElementById('react-container')
 );
