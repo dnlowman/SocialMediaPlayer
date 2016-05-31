@@ -22,9 +22,8 @@ export default class VideoPlayer extends Component {
 
     componentDidMount() {
         this.refs.video.oncontextmenu = () => { return false; };
-<<<<<<< HEAD
-        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true);
-              debugger;  
+        this.state.player.initialize(this.refs.video, 'http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd', true);
+              
         // if(localStorage.getItem('seek') > 0)
         // {
         //     console.log(localStorage.getItem('seek'));
@@ -43,9 +42,6 @@ export default class VideoPlayer extends Component {
                 }));
             }
         }, 1000);
-=======
-        this.state.player.initialize(this.refs.video, 'http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd', true);
->>>>>>> 32045f917529db89b99eb8a7ecba2436590aac9a
     }
 
     onPlayPause = () => {
