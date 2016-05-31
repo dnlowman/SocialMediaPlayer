@@ -15,7 +15,7 @@ export default class VideoPlayer extends Component {
 
     componentDidMount() {
         this.refs.video.oncontextmenu = () => { return false; };
-        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true);
+        this.state.player.initialize(this.refs.video, 'http://rdmedia.bbc.co.uk/dash/ondemand/elephants_dream/1/client_manifest-all.mpd', true);
     }
 
     render() {
