@@ -4,11 +4,11 @@ import 'ms-signalr-client';
 export default class Chat extends Component {
   componentDidMount()
   {
-    let connection = $.hubConnection('http://[address]:[port]');
-    let proxy = connection.createHubProxy('[hubname]');
+    let connection = $.hubConnection('http://localhost:1080');
+    let proxy = connection.createHubProxy('ChatHub');
 
     // receives broadcast messages from a hub function, called "broadcastMessage"
-    proxy.on('broadcastMessage', function(message) {
+    proxy.on('hello', function(message) {
         console.log(message);
     });
 
