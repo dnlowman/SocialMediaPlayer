@@ -12,6 +12,8 @@
   "license": "APACHE-2.0",
   "dependencies": {
     "dashjs": "^2.1.1",
+    "jquery": "^2.2.4",
+    "ms-signalr-client": "^2.2.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2"
   },
