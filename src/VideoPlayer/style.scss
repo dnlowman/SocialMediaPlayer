@@ -36,15 +36,20 @@ body {
         }
 
         .twitter-feed-container {
+            opacity: 1;
             position: absolute;
             color: white;
             background-color: rgba(255, 255, 255, 0.15);
             border-radius: 0.3em;
-            width: 40.0em;
-            height: 15.0em;
+            width: 35em;
+            height: 19em;
             text-align: center;
-            padding-top: 0.5em;
-            left: 18%;
+            padding-top: 1.5em;
+            left: 20%;
+            
+            .item {
+                margin-bottom: 1.2em;
+            }
         }
     }
 

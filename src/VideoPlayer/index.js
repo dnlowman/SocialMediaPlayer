@@ -13,7 +13,10 @@ export default class VideoPlayer extends Component {
             volumePercentage: 100,
             isSeekBarMouseDown: false,
             isVolumeBarMouseDown: false,
-            tweets: [],
+            tweets: [{
+                User: 'Loading',
+                Text: ''
+            }],
             proxy: null,
         };
 
@@ -261,7 +264,7 @@ export default class VideoPlayer extends Component {
                     <div className="twitter-feed-container">
                         <i className="fa fa-twitter fa-lg" aria-hidden="true"></i>
                         {
-                            this.state.tweets.map((tweet, idx) => <div key={idx}>{tweet.User} - {tweet.Text}</div> )
+                            this.state.tweets.map((tweet, idx) => <div className="item" key={idx}>{tweet.User} - {tweet.Text}</div> )
                         }
                     </div>
                 </div>
