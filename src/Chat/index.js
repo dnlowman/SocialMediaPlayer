@@ -15,7 +15,6 @@ export default class Chat extends Component {
   }
   
   userJoined = (connectedUsers) => {
-    debugger
     console.log('successfulJoin');
     this.setState(Object.assign(this.state, {
       connectedUsers: connectedUsers
@@ -23,31 +22,28 @@ export default class Chat extends Component {
   }
   
   userDisconencted = (users, userWhoLeft) => {
-    debugger
     this.setState(Object.assign(this.state, { 
       connectedUsers: users 
     }));
   }
   
   messageRecieved = (userName, message) => {
-    debugger
-    let messages = this.state.messages.push(message);
-    this.setState(Object.assign(this.state, {
-      messages: messages
-    }));
+    this.state.messages.push(message);
+    this.setState(Object.assign(this.state, { messages: this.state.messages }));
   }
   
   sendMessage = () => {
     console.log('send message called');
     if(this.refs.messageBox.value !== undefined && this.refs.messageBox.value.length > 0)
     {
-      this.state.proxy.invoke('sendMessage', this.refs.messageBox.value, this.state.userName);
+      this.state.proxy.invoke('sendMessage',this.state.userName, this.refs.messageBox.value);
+      this.refs.messageBox.value = '';
     }
   } 
   
   componentDidMount()
   {
-    let connection = $.hubConnection('http://localhost:8081');
+    let connection = $.hubConnection('http://bss-interstella-api.azurewebsites.net:80');
     let proxy = connection.createHubProxy('ChatHub');
     
     proxy.on('successfulJoin', this.userJoined);
@@ -64,10 +60,11 @@ export default class Chat extends Component {
             proxy.invoke('join', username).fail(function (error) {
             console.log('Invocation of join failed. Error: ' + error);
         });
-        this.setState({ proxy: proxy, userName: username });
       }
     })
     .fail(function(){ console.log('Could not connect'); });
+    
+    this.setState(Object.assign(this.state, { proxy: proxy, userName: username }));
   }
 
   render() {
