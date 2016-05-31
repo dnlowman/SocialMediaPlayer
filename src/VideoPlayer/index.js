@@ -1,79 +1,22 @@
 import React, { Component } from 'react';
 import { MediaPlayer, Debug } from 'dashjs';
-import Controls from './Controls';
 import './style.scss';
 
 export default class VideoPlayer extends Component {
     constructor(props) {
         super(props);
-        this.state = { needleLeft: 0, isMouseDown: false, player: MediaPlayer().create() };
+
+        this.state = {
+            player: MediaPlayer().create()
+        };
+
         this.state.player.getDebug().setLogToBrowserConsole(false);
     }
 
     componentDidMount() {
-        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true, false);
-        //player.pause();
-
-        this.refs.seek.addEventListener('mouseenter', this.onMouseEnterSeek);
-        this.refs.seek.addEventListener('mouseout', this.onMouseLeaveSeek);
-        this.refs.seek.addEventListener('mousemove', this.onMouseMoveSeek);
-
-        window.addEventListener('mouseup', this.onMouseUpNeedle);
-        window.addEventListener('mousemove', this.onMouseMoveSeek);
-
-        //this.refs.seek.addEventListener('mousedown', () => { console.log('Down down down...') });
-
-        //this.refs.seek.addEventListener('mousedown', this.onMouseDownNeedle);
-
-        this.refs.needle.addEventListener('mousedown', this.onMouseDownNeedle);
-        this.refs.needle.addEventListener('mouseup', this.onMouseUpNeedle);
+        this.refs.video.oncontextmenu = () => { return false; };
+        this.state.player.initialize(this.refs.video, 'http://dash.edgesuite.net/envivio/Envivio-dash2/manifest.mpd', true);
     }
-
-    componentWillUnmount() {
-        this.refs.seek.removeEventListener('mouseenter', this.onMouseEnterSeek);
-        this.refs.seek.removeEventListener('mouseout', this.onMouseLeaveSeek);
-        this.refs.seek.removeEventListener('mousemove', this.onMouseMoveSeek);
-
-        this.refs.needle.removeEventListener('mousedown', this.onMouseDownNeedle);
-        this.refs.needle.removeEventListener('mouseup', this.onMouseUpNeedle);
-    }
-
-    onMouseEnterSeek = (e) => {
-        //e.preventDefault();
-        //console.log('Mouse enter...');
-    };
-
-    onMouseLeaveSeek = (e) => {
-        //e.preventDefault();
-        //console.log('Mouse leave...');
-    };
-
-    onMouseMoveSeek = (mouseEvent) => {
-        //mouseEvent.preventDefault();
-        //mouseEvent.stopPropagation();
-        //console.log('Mouse move...' + ' X ' + mouseEvent.offsetX);
-
-        var rect = this.refs.seek.getBoundingClientRect();
-        if(this.state.isMouseDown && mouseEvent.pageX - rect.left <= this.refs.seek.offsetWidth && mouseEvent.pageX - rect.left >= 0)
-            this.setState({ needleLeft: mouseEvent.pageX - rect.left, isMouseDown: this.state.isMouseDown, player: this.state.player});
-    };
-
-    onMouseDownNeedle = (mouseEvent) => {
-        this.setState({ needleLeft: this.state.needleLeft, isMouseDown: true, player: this.state.player });
-    };
-
-    onMouseUpNeedle = (mouseEvent) => {
-        if(this.state.isMouseDown)
-            this.state.player.seek(10);
-        this.setState({ needleLeft: this.state.needleLeft, isMouseDown: false, player: this.state.player });
-    };
-
-    onPlayPauseClick = () => {
-        if(this.state.player.isPaused())
-            this.state.player.play();
-        else
-            this.state.player.pause();
-    };
 
     render() {
         const style = {};
@@ -82,7 +25,35 @@ export default class VideoPlayer extends Component {
         return (
             <div className="sky-video-container">
                 <video ref="video"></video>
-                <Controls player={this.state.player} />
+                <div className="content-container">
+                    <div className="title">
+                        Game of Thrones - The Door
+                    </div>
+                    <div className="twitter-feed-container">
+                        <i className="fa fa-twitter fa-lg" aria-hidden="true"></i>
+                        <br />OMG
+                        <br />WOAH!
+                    </div>
+                </div>
+                <div className="controls-container">
+                    <div className="controls">
+                        <i className="fa fa-play fa-lg" aria-hidden="true"></i>
+                        <div className="seek-container">
+                            <div className="seek-progress">
+                            </div>
+                            <div className="needle">
+                            </div>
+                        </div>
+                        <div className="volume-container">
+                            <i className="fa fa-volume-up fa-lg" aria-hidden="true"></i>
+                            <div className="volume-level-container">
+                                <div className="needle">
+                                </div>
+                            </div>
+                        </div>
+                        <i className="fa fa-expand fa-lg" aria-hidden="true"></i>
+                    </div>
+                </div>
             </div>
         );
     }

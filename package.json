@@ -5,11 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "precompile": "npm run clean",
     "compile": "webpack --progress",
-    "preserve": "npm run clean",
-    "serve": "webpack-dev-server --content-base dist --port 8080",
-    "clean": "IF exist dist (rmdir dist /S /Q)"
+    "serve": "webpack-dev-server --content-base dist --port 8080"
   },
   "author": "Daniel Lowman",
   "license": "APACHE-2.0",
