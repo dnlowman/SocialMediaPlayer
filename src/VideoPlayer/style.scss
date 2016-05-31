@@ -14,6 +14,9 @@ body {
     margin: 0px;
     position: relative;
     background-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
 
     video {
         width: 100%;
@@ -36,15 +39,20 @@ body {
         }
 
         .twitter-feed-container {
+            opacity: 1;
             position: absolute;
             color: white;
             background-color: rgba(255, 255, 255, 0.15);
             border-radius: 0.3em;
-            width: 15.0em;
-            height: 15.0em;
+            width: 35em;
+            height: 19em;
             text-align: center;
-            padding-top: 0.5em;
-            left: 68%;
+            padding-top: 1.5em;
+            left: 20%;
+            
+            .item {
+                margin-bottom: 1.2em;
+            }
         }
     }
 

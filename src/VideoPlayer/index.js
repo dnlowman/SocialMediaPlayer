@@ -13,7 +13,11 @@ export default class VideoPlayer extends Component {
             volumePercentage: 100,
             isSeekBarMouseDown: false,
             isVolumeBarMouseDown: false,
-            proxy: null
+            tweets: [{
+                User: 'Loading',
+                Text: ''
+            }],
+            proxy: null,
         };
 
         this.state.player.getDebug().setLogToBrowserConsole(false);
@@ -29,9 +33,27 @@ export default class VideoPlayer extends Component {
             if(!this.state.isSeekBarMouseDown && this.state.player.duration() > 0) {
                 this.setState(Object.assign({
                     seekPercentage: this.refs.video.currentTime / this.state.player.duration() * 100
+
                 }));
             }
         }, 1000);
+
+        setInterval(() => {
+            $.get("http://bssinterstellar.azurewebsites.net/api/twitter?q=gameofthrones", ( data ) => {
+                let obj = JSON.parse(data);
+
+                let tweets = obj.map((item) => {
+                                    return {
+                                        User: item.User.ScreenName,
+                                        Text: item.Text
+                                    }
+                                });
+
+                this.setState(Object.assign({
+                    tweets
+                }));
+            });
+        }, 5000);
 
         let connection = $.hubConnection('http://bss-interstella-api.azurewebsites.net:80');
         let proxy = connection.createHubProxy('PlaybackHub');
@@ -214,7 +236,7 @@ export default class VideoPlayer extends Component {
 
         localStorage.setItem("volume", percentage);
 
-        this.state.player.setVolume(volume / 100);
+        this.state.player.setVolume(percentage / 100);
     }
 
 
@@ -242,8 +264,9 @@ export default class VideoPlayer extends Component {
                     </div>
                     <div className="twitter-feed-container">
                         <i className="fa fa-twitter fa-lg" aria-hidden="true"></i>
-                        <br />OMG
-                        <br />WOAH!
+                        {
+                            this.state.tweets.map((tweet, idx) => <div className="item" key={idx}>{tweet.User} - {tweet.Text}</div> )
+                        }
                     </div>
                 </div>
                 <div className="controls-container">
